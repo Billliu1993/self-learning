@@ -1,0 +1,15 @@
+[project]
+name = "llm-ocr"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "docling>=2.15.1",
+    "gradio>=5.13.1",
+    "jupyterlab>=4.3.4",
+    "langchain-openai>=0.3.3",
+    "langgraph>=0.2.69",
+    "modal>=0.72.47",
+    "openai>=1.60.0",
+]
