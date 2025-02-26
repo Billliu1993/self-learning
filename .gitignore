@@ -172,3 +172,6 @@ cython_debug/
 
 # pip cache
 .DS_Store
+
+# other
+*.pdf
