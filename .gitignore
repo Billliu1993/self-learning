@@ -174,4 +174,4 @@ cython_debug/
 .DS_Store
 
 # other
-gemini_ocr/sample_pdf/*
+gemini-ocr/sample_pdf/*
