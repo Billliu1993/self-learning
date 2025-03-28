@@ -1,0 +1,70 @@
+extract_numerical_values_task:
+  description: >
+    Extract only the numerical values and their associated metrics from the provided report text.
+    
+    Process the following report:
+    
+    ```
+    {{content}}
+    ```
+    
+    For each numerical value found, extract it along with its associated metric.
+    Format each as 'value: metric' on a new line.
+    
+    Example of expected output format:
+    92: customer satisfaction
+    45%: revenue growth
+  expected_output: >
+    Text with extracted numerical values in format 'value: metric', one per line
+  agent: "report_formatter"
+  async_execution: false
+
+convert_to_percentages_task:
+  description: >
+    Convert all numerical values to percentages where possible.
+    If not a percentage or points, convert to decimal (e.g., 92 points -> 92%).
+    Keep one number per line.
+    Example format:
+    92%: customer satisfaction
+    45%: revenue growth
+    
+    Here are the values to convert:
+    {{extract_numerical_values_task.output}}
+  expected_output: >
+    Text with all values in percentage format where possible, in 'value: metric' format
+  agent: "report_formatter"
+  async_execution: false
+  depends_on: ["extract_numerical_values_task"]
+
+sort_values_task:
+  description: >
+    Sort all lines in descending order by numerical value.
+    Keep the format 'value: metric' on each line.
+    Example:
+    92%: customer satisfaction
+    87%: employee satisfaction
+    
+    Here are the values to sort:
+    {{convert_to_percentages_task.output}}
+  expected_output: >
+    Text with all values sorted in descending order
+  agent: "report_formatter"
+  async_execution: false
+  depends_on: ["convert_to_percentages_task"]
+
+format_as_markdown_table_task:
+  description: >
+    Format the sorted data as a markdown table with columns:
+    | Metric | Value |
+    |:--|--:|
+    | Customer Satisfaction | 92% |
+    
+    Here are the sorted values to format:
+    {{sort_values_task.output}}
+  expected_output: >
+    Properly formatted markdown table with metrics and values
+  agent: "report_formatter"
+  async_execution: false
+  depends_on: ["sort_values_task"]
+
+
